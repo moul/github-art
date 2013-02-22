@@ -14,5 +14,8 @@ class PixelArt
       @art = buffer.toString().split('\n')[0...7]
       fn err, @art if fn
 
+  toString: => @art.join ''
+  toArray: =>  @toString().split(//)
+
 module.exports =
   PixelArt: PixelArt
