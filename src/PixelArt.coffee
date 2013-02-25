@@ -1,6 +1,6 @@
 fs = require 'fs'
 
-class PixelArt
+class module.exports.PixelArt
   constructor: (@options = {}) ->
     switch typeof(@options)
       when 'string'
@@ -16,6 +16,3 @@ class PixelArt
 
   toString: => @art.join ''
   toArray: =>  @toString().split(//)
-
-module.exports =
-  PixelArt: PixelArt
