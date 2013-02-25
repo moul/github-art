@@ -1,10 +1,5 @@
-{Repos} =     require '../src/Repos'
-{PixelArt} =  require '../src/PixelArt'
-{DateRange} = require '../src/DateRange'
+{GhCalendarPixelArt} = require '../src/GhCalendarPixelArt'
 
-pa = new PixelArt
-pa.loadFile '../arts/moul.txt', (err, art) ->
-  dr = new DateRange
-  repos = new Repos pa, dr
-  console.log repos.map()
-
+opts = art: '../arts/moul.txt'
+gh = new GhCalendarPixelArt opts, ->
+  console.log gh.map
