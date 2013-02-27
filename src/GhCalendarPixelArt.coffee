@@ -3,11 +3,21 @@
 {Repos} =     require './Repos'
 
 class module.exports.GhCalendarPixelArt
-  constructor: (@opts = {}, fn) ->
-    @pa = new PixelArt
-    @dr = new DateRange
-    @.__defineGetter__ 'map', @map
-    @pa.loadFile @opts.art, fn
+  constructor: (@opts = {}, fn = (->)) ->
+    @opts.repos ?= {}
+    @opts.art ?=   {}
+    @opts.range ?= {}
+    new PixelArt  @opts.art, (err, data) =>
+      @pa = data
+      return fn err, data if err
+      new DateRange @opts.range, (err, data) =>
+        @dr = data
+        return fn err, data if err
+        new Repos     @opts.repos, (err, data) =>
+          @re = data
+          return fn err, data if err
+          @.__defineGetter__ 'map', @map
+          fn false, {}
     return @
 
   map: =>
@@ -20,10 +30,6 @@ class module.exports.GhCalendarPixelArt
     return @_map
 
 ###
-{Repos} =     require '../src/Repos'
-{PixelArt} =  require '../src/PixelArt'
-{DateRange} = require '../src/DateRange'
-
 pa = new PixelArt
 pa.loadFile '../arts/moul.txt', (err, art) ->
   dr = new DateRange

@@ -19,7 +19,7 @@ removeDays = (date, days = 1) ->
 addDays = (date, days = 1) -> removeDays date, -days
 
 class DateRange
-  constructor: (@options = {}) ->
+  constructor: (@options = {}, fn = null) ->
     @now =                   @options.now || new Date()
     @length =                51 * 7
     @clean =                 cleanDate     @now
@@ -27,6 +27,7 @@ class DateRange
     @currentLastSunday =     getLastSunday @now
     @first =                 removeWeeks   @currentLastSunday, 51 - @isCurrentWeekComplete
     @last =                  removeDays    @currentLastSunday, 1
+    fn false, @ if fn
     return @
 
   getDay: (i) => addDays @first, i

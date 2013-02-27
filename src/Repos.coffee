@@ -1,6 +1,7 @@
 class module.exports.Repos
-  constructor: (@opts = {}) ->
+  constructor: (@opts = {}, fn = null) ->
     @opts.bin ?= 'git'
+    fn false, @ if fn
     return @
 
   exec: (cmd = [], fn = null) =>

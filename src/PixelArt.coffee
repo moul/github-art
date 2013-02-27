@@ -1,11 +1,16 @@
 fs = require 'fs'
 
 class module.exports.PixelArt
-  constructor: (@options = {}) ->
+  constructor: (@options = {}, fn = null) ->
     switch typeof(@options)
       when 'string'
-        @loadFile @options
-        @options = {}
+        @options = path: @options
+    if @options.path?
+      @loadFile @options.path, (err, data) =>
+        return fn err, data if err
+        fn false, @
+    else
+      fn false, @
     return @
 
   loadFile: (filePath, fn = null) =>
