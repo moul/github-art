@@ -1,3 +1,5 @@
+{call, system} = require './utils'
+
 class module.exports.Repos
   constructor: (@opts = {}, fn = null) ->
     @opts.bin ?= 'git'
@@ -14,6 +16,7 @@ class module.exports.Repos
 
   init: (fn = null) =>                     @exec [@opts.bin, 'init',   @opts.path],             fn
   add: (path = '.', fn = null) =>          @exec [@opts.bin, 'add',    path],                   fn
+
   commit: (opts = {}, fn = null) =>
     opts.message ?= '.'
     opts.date ?= new Date

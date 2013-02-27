@@ -31,7 +31,9 @@ class module.exports.GhCalendarPixelArt
       for i in [0...nbCommits]
         @todo.push
           date: date
-    @_create_repos_rec fn
+    @re.init (err, data) =>
+      return fn err, data if err
+      @_create_repos_rec fn
 
   _create_repos_rec: (fn = (->)) =>
     unless @todo.length
