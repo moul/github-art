@@ -1,4 +1,6 @@
 {call, system} = require './utils'
+pth = require 'path'
+fs = require 'fs'
 
 class module.exports.Repos
   constructor: (@opts = {}, fn = null) ->
@@ -7,17 +9,24 @@ class module.exports.Repos
     return @
 
   createFile: (filename, content = '', fn = null) =>
-    console.log 'createFile', filename, content
-    fn false, {} if fn
+    #console.log 'createFile', filename, content
+    fs.writeFile filename, content, 'utf-8', fn
 
   exec: (cmd = [], fn = null) =>
-    console.log cmd
-    fn false, {} if fn
+    call cmd[0], cmd[1...], fn
 
-  init: (fn = null) =>                     @exec [@opts.bin, 'init',   @opts.path],             fn
-  add: (path = '.', fn = null) =>          @exec [@opts.bin, 'add',    path],                   fn
+  init: (fn = null) =>
+    if @opts.new
+      @exec ['rm', '-rf', pth.join(@opts.path, '.git')], (err, stdout, stderr) =>
+        return fn err, stdout, stderr if err
+        @exec [@opts.bin, 'init', @opts.path], fn
+    else
+      @exec [@opts.bin, 'init', @opts.path], fn
+
+  add: (path = '.', fn = null) =>
+    @exec [@opts.bin, 'add', pth.join @opts.path, path], fn
 
   commit: (opts = {}, fn = null) =>
     opts.message ?= '.'
     opts.date ?= new Date
-    @exec [@opts.bin, 'commit', '-a', '-m', opts.message, '--date', opts.date], fn
+    @exec [@opts.bin, 'commit', '-m', opts.message, '--date', opts.date], fn

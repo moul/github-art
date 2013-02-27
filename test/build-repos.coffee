@@ -5,7 +5,7 @@ process.stdout.write '\u001B[2J\u001B[0;0f'
 
 opts =
   art:
-    path: '../arts/moul.txt'
+    path: "#{__dirname}/../arts/moul.txt"
   repos:
     path: '/tmp/tmp-repos'
     new:  true
