@@ -13,3 +13,5 @@ opts =
 
 gh = new GhCalendarPixelArt opts, ->
   console.log gh
+  gh.create_repos (err, data) ->
+    console.log err, data

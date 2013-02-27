@@ -20,19 +20,39 @@ class module.exports.GhCalendarPixelArt
           fn false, {}
     return @
 
+  run: (fn = (->)) =>
+    @create_repos (err, data) =>
+      return fn err, data if err
+      fn false, {}
+
+  create_repos: (fn = (->)) =>
+    @todo = []
+    for date, nbCommits of @map
+      for i in [0...nbCommits]
+        @todo.push
+          date: date
+    @_create_repos_rec fn
+
+  _create_repos_rec: (fn = (->)) =>
+    unless @todo.length
+      return fn false, {}
+    next = @todo.shift()
+    @re.createFile 'pony.txt', Math.random().toString(), (err, data) =>
+      return fn err, data if err
+      @re.add 'pony.txt', (err, data) =>
+        return fn err, data if err
+        opts =
+          date:    next.date
+          message: 'pony pony pony'
+        @re.commit opts, (err, data) =>
+          return fn err, data if err
+          @_create_repos_rec fn
+
   map: =>
     return @_map if @_map
     paArr = @pa.toArray()
     drArr = @dr.toArray()
     @_map = {}
     for i in [0...@dr.length]
-      @_map[drArr[i].getTime()] = paArr[i]
+      @_map[Math.floor(drArr[i].getTime() / 1000)] = paArr[i]
     return @_map
-
-###
-pa = new PixelArt
-pa.loadFile '../arts/moul.txt', (err, art) ->
-  dr = new DateRange
-  repos = new Repos pa, dr
-  console.log repos.map()
-###
