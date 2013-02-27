@@ -1,5 +1,8 @@
 {GhCalendarPixelArt} = require '../src/GhCalendarPixelArt'
 
+# clear terminal
+process.stdout.write '\u001B[2J\u001B[0;0f'
+
 opts =
   art:
     path: '../arts/moul.txt'
