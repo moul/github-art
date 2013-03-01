@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "ERROR: No README.md file found!",
   "main": "index.js",
+  "bin": {
+    "github-art": "./bin/github-art"
+  },
   "directories": {
     "test": "test"
   },
@@ -12,6 +15,9 @@
   "repository": {
     "type": "git",
     "url": "git://github.com/moul/github-art"
+  },
+  "dependencies": {
+    "commander": "1.1.1"
   },
   "keywords": [
     "github",
