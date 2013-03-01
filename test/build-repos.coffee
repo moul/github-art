@@ -8,6 +8,7 @@ opts =
     path: "#{__dirname}/../arts/moul.txt"
   repos:
     path: '/tmp/tmp-repos'
+    origin: 'git@github.com:moul/github-art.git'
     new:  true
   date: {}
 

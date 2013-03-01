@@ -19,9 +19,20 @@ class module.exports.Repos
     if @opts.new
       @exec ['rm', '-rf', pth.join(@opts.path, '.git')], (err, stdout, stderr) =>
         return fn err, stdout, stderr if err
-        @exec [@opts.bin, 'init', @opts.path], fn
+        @_init @opts.path, fn
     else
-      @exec [@opts.bin, 'init', @opts.path], fn
+      @_init @opts.path, fn
+
+  _init: (path, fn = null) =>
+    @exec [@opts.bin, 'init', path], (err, stdout, stderr) =>
+      return fn err, stdout, stderr if err
+      if @opts.origin
+        @_setupRemote 'origin', @opts.origin, fn
+      else
+        fn err, stdout, stderr
+
+  _setupRemote: (name, url, fn = null) =>
+    @exec [@opts.bin, 'remote', 'add', name, url], fn
 
   add: (path = '.', fn = null) =>
     @exec [@opts.bin, 'add', pth.join @opts.path, path], fn
