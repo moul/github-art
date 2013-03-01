@@ -31,8 +31,11 @@ class module.exports.Repos
       else
         fn err, stdout, stderr
 
-  _setupRemote: (name, url, fn = null) =>
-    @exec [@opts.bin, 'remote', 'add', name, url], fn
+  _setupRemote: (remoteName, url, fn = null) =>
+    @exec [@opts.bin, 'remote', 'add', remoteName, url], fn
+
+  push: (fn = null) =>
+    @exec [@opts.bin, 'push', '--force', '-u', 'origin', 'master'], fn
 
   add: (path = '.', fn = null) =>
     @exec [@opts.bin, 'add', pth.join @opts.path, path], fn

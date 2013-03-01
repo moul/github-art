@@ -33,7 +33,8 @@ class module.exports.GhCalendarPixelArt
           date: date
     @re.init (err, data) =>
       return fn err, data if err
-      @_create_repos_rec fn
+      @_create_repos_rec (err, data) =>
+        @re.push fn
 
   _create_repos_rec: (fn = (->)) =>
     unless @todo.length
