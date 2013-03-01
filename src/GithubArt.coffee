@@ -2,7 +2,7 @@
 {DateRange} = require './DateRange'
 {Repos} =     require './Repos'
 
-class module.exports.GhCalendarPixelArt
+class module.exports.GithubArt
   constructor: (@opts = {}, fn = (->)) ->
     @opts.repos ?= {}
     @opts.art ?=   {}
@@ -36,20 +36,29 @@ class module.exports.GhCalendarPixelArt
       @_create_repos_rec (err, data) =>
         @re.push fn
 
+  _data: (fn = (->)) =>
+    unless @_data_var?
+      @_data_var = 0
+    @_data_var = 1 - @_data_var
+    fn @_data_var if fn
+    #Math.random().toString()
+    return @_data_var
+
   _create_repos_rec: (fn = (->)) =>
     unless @todo.length
       return fn false, {}
     next = @todo.shift()
-    @re.createFile 'pony.txt', Math.random().toString(), (err, data) =>
-      return fn err, data if err
-      @re.add 'pony.txt', (err, data) =>
+    @_data (data) =>
+      @re.createFile 'pony.txt', data, (err, data) =>
         return fn err, data if err
-        opts =
-          date:    next.date
-          message: 'pony pony pony'
-        @re.commit opts, (err, data) =>
+        @re.add 'pony.txt', (err, data) =>
           return fn err, data if err
-          @_create_repos_rec fn
+          opts =
+            date:    next.date
+            message: '.'
+          @re.commit opts, (err, data) =>
+            return fn err, data if err
+            @_create_repos_rec fn
 
   map: =>
     return @_map if @_map
