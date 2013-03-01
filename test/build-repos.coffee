@@ -5,10 +5,10 @@ process.stdout.write '\u001B[2J\u001B[0;0f'
 
 opts =
   art:
-    path: "#{__dirname}/../arts/moul.txt"
+    path: "#{__dirname}/../arts/rainbow-4.txt"
   repos:
     path: '/tmp/tmp-repos'
-    origin: 'git@github.com:moul/github-art.git'
+    origin: 'git@github.com:moul/github-art-data.git'
     new:  true
   date: {}
 
