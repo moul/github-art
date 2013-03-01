@@ -1,5 +1,5 @@
 {
-  "name": "gh-calendar-graph-pixel-art",
+  "name": "github-art",
   "version": "0.0.1",
   "description": "ERROR: No README.md file found!",
   "main": "index.js",
@@ -11,11 +11,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/moul/gh-calendar-graph-pixel-art.git"
+    "url": "git://github.com/moul/github-art"
   },
   "keywords": [
     "github",
     "pixel-art",
+    "git",
     "art"
   ],
   "author": "Manfred Touron <m@42.am>",
