@@ -1,3 +1,4 @@
+pth = require 'path'
 fs = require 'fs'
 
 class module.exports.PixelArt
@@ -14,6 +15,7 @@ class module.exports.PixelArt
     return @
 
   loadFile: (filePath, fn = null) =>
+    filePath = pth.normalize filePath.replace /^~/, process.env.HOME
     fs.readFile filePath, (err, buffer) =>
       return fn err, buffer if err and buffer
       @art = buffer.toString().split('\n')[0...7]

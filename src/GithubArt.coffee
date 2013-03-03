@@ -17,7 +17,7 @@ class module.exports.GithubArt
           @re = data
           return fn err, data if err
           @.__defineGetter__ 'map', @map
-          fn false, {}
+          fn false, @
     return @
 
   run: (fn = (->)) =>
